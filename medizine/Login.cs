@@ -8,20 +8,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 namespace medizine
 {
     public partial class Login : Form
     {
+
+        private static string msSQL_DB_Connection = "";
+        SqlConnection con= null;
+        SqlCommand cmd;
+        SqlDataReader read;
+
+
         public Login()
         {
             InitializeComponent();
             lblError.ForeColor = Color.ForestGreen;
-        }
+            msSQL_DB_Connection = ConfigurationManager.ConnectionStrings["MSSQL_DB_Connection"].ConnectionString;
+        
 
         // database con
-        SqlConnection con = new SqlConnection("Data Source=SLBRAVO_06;Initial Catalog=pharmacy;Integrated Security=True");       
-         SqlCommand cmd;  
-        SqlDataReader read;
+
+
+
+        //SqlConnection con = new SqlConnection("Data Source=SLBRAVO_06;Initial Catalog=pharmacy;Integrated Security=True");       
+        con = new SqlConnection(msSQL_DB_Connection);
+       
+        }
         private void btnClose_Click(object sender, EventArgs e)
         {
             
@@ -83,6 +96,12 @@ namespace medizine
             }
 
 
+        }
+
+        private void btnSetUserLogin_Click(object sender, EventArgs e)
+        {
+            txtUserName.Text = "Nipuni";
+                txtPassword.Text = "MediZine78";
         }
     }
 }
